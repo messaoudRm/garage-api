@@ -1,0 +1,12 @@
+Polymorphisme
+Les trois tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · ShelfTest.java
+  · la signature Shelf.label(Item)
+
+Le but : que label() n'ait plus besoin de demander de quel type il s'agit.
+
+Quand c'est fait, ajoutez une revue — un titre et un numéro. Comptez les
+fichiers que vous ouvrez.

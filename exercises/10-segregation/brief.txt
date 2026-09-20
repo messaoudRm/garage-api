@@ -1,0 +1,13 @@
+I · Ségrégation des interfaces
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · BorrowKioskTest.java
+  · la signature BorrowKiosk.borrow(String)
+
+Ouvrez BorrowKiosk et comptez les méthodes qu'il implémente pour ne rien
+en faire.
+
+Le but : que le kiosque n'ait plus à écrire une seule ligne pour un geste
+qu'il ne fait pas.

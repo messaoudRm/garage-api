@@ -1,0 +1,12 @@
+D · Inversion des dépendances
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · RenewalsTest.java
+
+Ouvrez Renewals et regardez ce qu'il faut avoir sous la main pour appeler
+la règle de prolongation.
+
+Le but : qu'on puisse prolonger un prêt sans que Renewals sache d'où il
+vient — et qu'un deuxième moyen de les ranger existe, pour les tests.

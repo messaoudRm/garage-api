@@ -1,0 +1,12 @@
+S · Responsabilité unique
+Un seul test est vert, et c'est voulu : il ne couvre que la règle du
+bibliothécaire. Les autres comportements doivent continuer d'exister —
+c'est vous qui le vérifiez. Un filet ne protège que ce qu'il couvre.
+
+Ce que vous NE touchez pas :
+  · LoanTest.java
+
+Listez d'abord qui, dans la médiathèque, peut demander de modifier
+chacune des quatre méthodes de Loan.
+
+Le but : que Loan ne garde que ce que le bibliothécaire demande.

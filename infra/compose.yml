@@ -1,0 +1,26 @@
+# Chemins relatifs à la racine du dépôt : le Makefile passe --project-directory .
+x-environment: &environment
+  build:
+    context: .
+    dockerfile: infra/Dockerfile
+  image: java-sandbox:1
+  working_dir: /workspace
+  volumes:
+    - .:/workspace
+  init: true
+
+services:
+  # Tests, run et jshell : aucun port publié, donc rien ne peut entrer en conflit.
+  dev:
+    <<: *environment
+    command: sleep infinity
+
+  # make dev uniquement : publie la page de l'application, le temps de la session.
+  # Port déjà pris sur ta machine ? Mets PORT_WEB=9090 dans un fichier .env à la racine.
+  web:
+    <<: *environment
+    profiles: [web]
+    environment:
+      PORT_WEB: ${PORT_WEB:-2044}
+    ports:
+      - "127.0.0.1:${PORT_WEB:-2044}:8000"

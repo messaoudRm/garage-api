@@ -1,0 +1,12 @@
+Les profils
+Les trois tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · LoanDeskTest.java
+  · la signature LoanDesk.daysAllowed(String)
+
+Le but : que daysAllowed() ne décide plus de rien.
+
+Quand c'est fait, ajoutez le profil « partenaire », qui garde un ouvrage
+90 jours. Comptez les fichiers que vous ouvrez pour le faire.

@@ -1,0 +1,12 @@
+L · Substitution de Liskov
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · SizesTest.java et SquareTest.java
+
+Commencez par chercher la faute vous-même : écrivez, dans une classe à
+vous, un appel à Sizes.resizeTo5By4 qui donne un résultat faux. Vous y
+arriverez — ça compile, et ça ment.
+
+Le but : que cet appel-là ne compile plus.

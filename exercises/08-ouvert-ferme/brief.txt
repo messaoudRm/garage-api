@@ -1,0 +1,12 @@
+O · Ouvert / fermé
+Les trois tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · CheckoutTest.java
+  · la signature total(Money, String) — la caisse l'appelle comme ça
+
+Le but : que total() ne calcule plus aucun tarif.
+
+Quand c'est fait, ajoutez un quatrième tarif, et comptez les fichiers
+que vous avez ouverts pour y arriver.

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console · projets Java M1</title>
+<style>
+  :root {
+    --fond: #f7f6f3;
+    --carte: #ffffff;
+    --encre: #1b1a17;
+    --doux: #6b675e;
+    --trait: #e2ded5;
+    --accent: #2f6f4f;
+    --accent-doux: #e7f0ea;
+    --rouge: #9b2c2c;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --texte: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fond: #14161a; --carte: #1c1f25; --encre: #eceae4; --doux: #9a978f;
+      --trait: #2b2f37; --accent: #6bbd90; --accent-doux: #1e2b25; --rouge: #e08585;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--fond); color: var(--encre);
+    font: 15px/1.5 var(--texte);
+  }
+  header {
+    padding: 18px 24px; border-bottom: 1px solid var(--trait);
+    display: flex; gap: 20px; align-items: baseline; flex-wrap: wrap;
+  }
+  h1 { margin: 0; font-size: 17px; letter-spacing: -0.01em; }
+  header .note { color: var(--doux); font-size: 13px; }
+  select, input, button {
+    font: inherit; color: inherit; background: var(--carte);
+    border: 1px solid var(--trait); border-radius: 7px; padding: 7px 10px;
+  }
+  button { cursor: pointer; }
+  button.envoi { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  main { display: grid; grid-template-columns: 300px minmax(0, 1fr) minmax(0, 1fr); gap: 20px; padding: 20px 24px; align-items: start; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  section {
+    background: var(--carte); border: 1px solid var(--trait);
+    border-radius: 12px; padding: 16px;
+  }
+  h2 { margin: 0 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--doux); }
+  .champ { display: grid; gap: 4px; margin-bottom: 10px; }
+  .champ label { font-size: 12px; color: var(--doux); }
+  .champ input { width: 100%; font-family: var(--mono); font-size: 13px; }
+  .scenario {
+    display: block; width: 100%; text-align: left; margin-bottom: 7px;
+    border-radius: 8px; padding: 9px 11px; line-height: 1.35;
+  }
+  .scenario small { display: block; color: var(--doux); font-size: 12px; }
+  .scenario:hover { border-color: var(--accent); }
+  pre {
+    margin: 0; font-family: var(--mono); font-size: 13px; line-height: 1.55;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .url { color: var(--doux); font-family: var(--mono); font-size: 12px; margin-bottom: 10px; word-break: break-all; }
+  .statut { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+            background: var(--accent-doux); color: var(--accent); margin-bottom: 10px; }
+  .statut[data-mauvais="oui"] { background: transparent; color: var(--rouge); border: 1px solid var(--rouge); }
+  .aide { color: var(--doux); font-size: 13px; margin-top: 14px; border-top: 1px solid var(--trait); padding-top: 12px; }
+  .aide code { font-family: var(--mono); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Console des projets</h1>
+  <select id="sujet" aria-label="Sujet"></select>
+  <input id="hote" value="http://localhost:8080" size="24" aria-label="Adresse du serveur">
+  <span class="note">Votre serveur doit tourner : <code>make dev</code></span>
+</header>
+
+<main>
+  <section>
+    <h2>Scénarios</h2>
+    <div id="scenarios"></div>
+    <p class="aide">
+      Un clic remplit le formulaire avec un cas du client. À vous de vérifier que la réponse
+      correspond au critère annoncé.
+    </p>
+  </section>
+
+  <section>
+    <h2>La requête</h2>
+    <div id="champs"></div>
+    <button class="envoi" id="envoyer">Envoyer</button>
+    <p class="aide" id="contrat"></p>
+  </section>
+
+  <section>
+    <h2>La réponse</h2>
+    <span class="statut" id="statut">en attente</span>
+    <p class="url" id="url"></p>
+    <pre id="corps">Choisissez un scénario, puis Envoyer.</pre>
+  </section>
+</main>
+
+<script src="sujets.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  let courant = SUJETS[0];
+
+  function remplitSujets() {
+    $("sujet").innerHTML = SUJETS.map((s, i) => `<option value="${i}">${s.titre}</option>`).join("");
+    $("sujet").onchange = () => { courant = SUJETS[$("sujet").value]; dessine(); };
+  }
+
+  function dessine() {
+    $("champs").innerHTML = courant.champs.map((c) => `
+      <div class="champ">
+        <label for="c-${c.nom}">${c.nom}${c.aide ? " · " + c.aide : ""}</label>
+        <input id="c-${c.nom}" value="${c.defaut ?? ""}">
+      </div>`).join("");
+    $("scenarios").innerHTML = courant.scenarios.map((s, i) => `
+      <button class="scenario" data-i="${i}">${s.titre}<small>${s.attendu}</small></button>`).join("");
+    for (const bouton of document.querySelectorAll(".scenario")) {
+      bouton.onclick = () => applique(courant.scenarios[bouton.dataset.i]);
+    }
+    $("contrat").innerHTML = `<code>${courant.methode} ${courant.chemin}</code> — ${courant.contrat}`;
+    $("corps").textContent = "Choisissez un scénario, puis Envoyer.";
+    $("statut").textContent = "en attente";
+    $("statut").removeAttribute("data-mauvais");
+    $("url").textContent = "";
+  }
+
+  function applique(scenario) {
+    for (const c of courant.champs) {
+      $("c-" + c.nom).value = scenario.valeurs[c.nom] ?? "";
+    }
+  }
+
+  function requete() {
+    return courant.champs
+      .filter((c) => $("c-" + c.nom).value !== "")
+      .map((c) => encodeURIComponent(c.nom) + "=" + encodeURIComponent($("c-" + c.nom).value))
+      .join("&");
+  }
+
+  async function envoie() {
+    const corps = requete();
+    const base = $("hote").value.replace(/\/$/, "") + courant.chemin;
+    const url = courant.methode === "GET" ? base + "?" + corps : base;
+    $("url").textContent = courant.methode + " " + url;
+    try {
+      const reponse = await fetch(url, courant.methode === "GET" ? {} : {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: corps,
+      });
+      const texte = await reponse.text();
+      $("statut").textContent = "HTTP " + reponse.status;
+      $("statut").dataset.mauvais = reponse.ok ? "non" : "oui";
+      try {
+        $("corps").textContent = JSON.stringify(JSON.parse(texte), null, 2);
+      } catch {
+        $("corps").textContent = texte;
+      }
+    } catch (erreur) {
+      $("statut").textContent = "injoignable";
+      $("statut").dataset.mauvais = "oui";
+      $("corps").textContent =
+        "Le serveur n'a pas répondu.\n\n" +
+        "1. Est-ce que make dev tourne ?\n" +
+        "2. Est-ce que votre API répond à " + courant.methode + " " + courant.chemin + " ?\n" +
+        "3. Est-ce que votre serveur renvoie l'en-tête Access-Control-Allow-Origin: * ?\n" +
+        "   Sans lui, le navigateur refuse la réponse sans rien afficher d'autre.\n\n" +
+        erreur;
+    }
+  }
+
+  $("envoyer").onclick = envoie;
+  remplitSujets();
+  dessine();
+</script>
+</body>
+</html>

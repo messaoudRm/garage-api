@@ -1,0 +1,12 @@
+Encapsulation
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · BasketDeskTest.java
+  · la signature BasketDesk.addToBasket(Basket, Book, int)
+
+Le but : que le guichet ne puisse plus écrire dans la liste du panier.
+
+Quand c'est fait, ajoutez la règle « dix ouvrages au maximum ». Regardez
+où elle a sa place maintenant — et où elle l'aurait eue avant.

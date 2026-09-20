@@ -1,0 +1,15 @@
+Du critère au test
+Trois critères du client, un seul test écrit. Écrivez les deux autres.
+
+Ce que vous NE touchez pas :
+  · src/main — le code respecte déjà les trois critères
+
+Les critères :
+  1. Une commande neuve coûte 0 €              (déjà écrit)
+  2. Un espresso coûte 2 €
+  3. Deux boissons différentes s'additionnent
+
+Le but : trois tests verts, et trois noms qu'un serveur comprendrait.
+
+Si votre test est rouge, c'est votre test qui se trompe — le code, lui,
+respecte le critère. Relisez ce que vous avez écrit, pas le code.

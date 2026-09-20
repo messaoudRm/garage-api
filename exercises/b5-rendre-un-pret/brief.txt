@@ -1,0 +1,12 @@
+Rendre un prêt
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · ReturnDeskTest.java
+  · la signature ReturnDesk.giveBack(String, LocalDate)
+
+Comptez d'abord : combien de lignes le guichet écrit-il pour rendre un
+prêt, et où vit la règle « on ne rend pas deux fois » ?
+
+Le but : qu'un prêt ne puisse jamais être rendu sans date de retour.

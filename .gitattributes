@@ -1,0 +1,3 @@
+# Les scripts tournent sous Linux : fins de ligne LF, même sur un clone Windows.
+* text=auto eol=lf
+*.jar binary

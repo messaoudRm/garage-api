@@ -1,0 +1,12 @@
+Abstraction
+Les trois tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · FineDeskTest.java
+  · les signatures label(Fine) et receipt(Fine)
+
+Comptez d'abord : combien d'endroits savent qu'une amende est rangée en
+centimes ?
+
+Le but : que FineDesk ne sache plus comment une amende est rangée.

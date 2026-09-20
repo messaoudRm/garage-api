@@ -1,0 +1,8 @@
+bin/
+out/
+target/
+.idea/
+.DS_Store
+.env
+# Le garage et les sauvegardes d'exercices : une corbeille, pas un historique.
+.workbench/

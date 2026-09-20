@@ -1,0 +1,12 @@
+Le réglage
+Les trois tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · LibraryTest.java
+  · les signatures daysAllowed(), maxRenewals() et fineFor(int)
+
+Commencez par compter : combien d'appels à new LoanPolicy(...) dans tout
+le projet ?
+
+Le but : que le code ne promette plus une souplesse qui n'existe pas.

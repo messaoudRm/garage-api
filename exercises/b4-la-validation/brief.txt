@@ -1,0 +1,10 @@
+La validation d'un prêt
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · RenewalsTest.java
+
+Commencez par compter : combien de classes implémentent LoanValidator ?
+
+Le but : qu'il ne reste que ce qui sert à quelque chose.

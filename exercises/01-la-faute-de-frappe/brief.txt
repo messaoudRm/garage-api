@@ -1,0 +1,9 @@
+Lire le compilateur
+Le code ne compile pas. Le message ci-dessus dit exactement où et quoi.
+
+  1. lisez l'erreur en entier, jusqu'au bout
+  2. corrigez src/main/java/hello/Hello.java
+  3. sauvegardez : le test passe au vert tout seul
+
+Vous venez de faire le tour complet de la boucle : écrire, compiler,
+lire l'erreur, corriger, vert.

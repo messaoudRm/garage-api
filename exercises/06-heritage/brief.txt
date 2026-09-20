@@ -1,0 +1,12 @@
+Héritage
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · LoanTest.java et MemberTest.java
+
+Commencez par chercher, dans tout le code, une ligne qui manipule un
+AbstractEntity.
+
+Regardez ensuite Registry : rien n'empêche d'y chercher un prêt avec le
+numéro d'un adhérent. Le but : que ça devienne impossible.

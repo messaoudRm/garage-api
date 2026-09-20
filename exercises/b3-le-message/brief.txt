@@ -1,0 +1,11 @@
+Le message
+Les deux tests sont verts. Ils ne sont pas la consigne : ils sont le
+filet qui dit que vous n'avez rien cassé.
+
+Ce que vous NE touchez pas :
+  · ReturnDeskTest.java
+  · la signature ReturnDesk.giveBack(String)
+
+Commencez par chercher qui écoute LoanReturned.
+
+Le but : que « qui appelle settle ? » ait une réponse dans votre IDE.
