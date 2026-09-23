@@ -118,4 +118,15 @@ class CreneauTest {
 
         assertFalse(demande.estDansLesHorairesDuGarage());
     }
+
+    @Test
+    void doit_accepter_un_creneau_qui_se_termine_a_midi() {
+
+        Creneau demande = new Creneau(
+                LocalTime.of(11, 30),
+                LocalTime.of(12, 0)
+        );
+
+        assertTrue(demande.estDansLesHorairesDuGarage());
+    }
 }
