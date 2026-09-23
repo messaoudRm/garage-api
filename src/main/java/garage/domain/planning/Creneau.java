@@ -4,6 +4,11 @@ import java.time.LocalTime;
 
 public class Creneau {
 
+    private static final LocalTime OUVERTURE_MATIN = LocalTime.of(8, 0);
+    private static final LocalTime PAUSE_DEJEUNER = LocalTime.of(12, 0);
+    private static final LocalTime OUVERTURE_APRES_MIDI = LocalTime.of(14, 0);
+    private static final LocalTime FERMETURE = LocalTime.of(18, 0);
+
     private final LocalTime debut;
     private final LocalTime fin;
 
@@ -24,11 +29,11 @@ public class Creneau {
     }
 
     public boolean estDansLesHorairesDuGarage() {
-        boolean matin = !debut.isBefore(LocalTime.of(8, 0))
-                && !fin.isAfter(LocalTime.of(12, 0));
+        boolean matin = !debut.isBefore(OUVERTURE_MATIN)
+                && !fin.isAfter(PAUSE_DEJEUNER);
 
-        boolean apresMidi = !debut.isBefore(LocalTime.of(14, 0))
-                && !fin.isAfter(LocalTime.of(18, 0));
+        boolean apresMidi = !debut.isBefore(OUVERTURE_APRES_MIDI)
+                && !fin.isAfter(FERMETURE);
 
         return matin || apresMidi;
     }
