@@ -1,5 +1,8 @@
 package garage.app.planning;
 
+import garage.domain.Dossier;
+import garage.domain.Operation;
+
 import java.time.LocalTime;
 import java.util.List;
 
@@ -39,5 +42,19 @@ public class Planning {
         }
 
         return null;
+    }
+
+    public Creneau trouverPremierCreneauPour(
+            Dossier dossier,
+            LocalTime heureDebut
+    ) {
+        Operation operation = dossier.operations().get(0);
+
+        int dureeMinutes = (int) operation.temps().toMinutes();
+
+        return trouverPremierCreneauDisponible(
+                heureDebut,
+                dureeMinutes
+        );
     }
 }
