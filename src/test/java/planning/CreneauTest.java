@@ -63,4 +63,15 @@ class CreneauTest {
                 )
         );
     }
+
+    @Test
+    void doit_accepter_un_creneau_dans_les_horaires_du_matin() {
+
+        Creneau demande = new Creneau(
+                LocalTime.of(8, 0),
+                LocalTime.of(12, 0)
+        );
+
+        assertTrue(demande.estDansLesHorairesDuGarage());
+    }
 }
