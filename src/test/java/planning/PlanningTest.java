@@ -8,9 +8,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlanningTest {
 
@@ -194,19 +192,27 @@ class PlanningTest {
                 List.of(operation)
         );
 
+        Baie pont25 = Baie.pont(2500);
+        Baie pont35 = Baie.pont(3500);
+
         Planning planning = new Planning(
-                Baie.pont(2500),
-                Baie.pont(3500)
+                pont25,
+                pont35
         );
 
         Planning.Resultat resultat =
-                planning.chercherCreneau(dossier, LocalTime.of(8, 0));
+                planning.chercherCreneau(
+                        dossier,
+                        LocalTime.of(8, 0)
+                );
 
         assertTrue(resultat.estDisponible());
-        assertEquals(
-                Baie.pont(3500),
+
+        assertSame(
+                pont35,
                 resultat.baie()
         );
+
         assertEquals(
                 new Creneau(
                         LocalTime.of(8, 0),
