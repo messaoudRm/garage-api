@@ -1,6 +1,7 @@
 package planning;
 
 import garage.app.planning.Baie;
+import garage.domain.Atelier;
 import garage.domain.Vehicule;
 import org.junit.jupiter.api.Test;
 
@@ -49,5 +50,45 @@ class BaieTest {
         );
 
         assertTrue(pont25.peutAccueillir(vehicule));
+    }
+
+    @Test
+    void doit_accepter_une_operation_de_mecanique_sur_un_pont() {
+
+        Baie pont25 = Baie.pont(2500);
+
+        assertTrue(
+                pont25.estCompatibleAvec(Atelier.MECANIQUE)
+        );
+    }
+
+    @Test
+    void doit_accepter_une_operation_de_mecanique_dans_une_fosse() {
+
+        Baie fosse = Baie.fosse();
+
+        assertTrue(
+                fosse.estCompatibleAvec(Atelier.MECANIQUE)
+        );
+    }
+
+    @Test
+    void doit_refuser_une_operation_de_carrosserie_sur_un_pont() {
+
+        Baie pont25 = Baie.pont(2500);
+
+        assertFalse(
+                pont25.estCompatibleAvec(Atelier.CARROSSERIE)
+        );
+    }
+
+    @Test
+    void doit_accepter_une_operation_de_carrosserie_dans_la_cabine_de_peinture() {
+
+        Baie cabine = Baie.cabinePeinture();
+
+        assertTrue(
+                cabine.estCompatibleAvec(Atelier.CARROSSERIE)
+        );
     }
 }
