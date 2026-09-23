@@ -428,4 +428,67 @@ class PlanningTest {
                 resultat.creneau()
         );
     }
+
+    @Test
+    void doit_retourner_une_raison_si_aucune_baie_compatible_n_est_disponible() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.MECANIQUE,
+                Duration.ofHours(3)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine"),
+                vehicule,
+                List.of(operation)
+        );
+
+        Baie pont25 = Baie.pont(
+                2500,
+                new Creneau(
+                        LocalTime.of(8, 0),
+                        LocalTime.of(12, 0)
+                ),
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(18, 0)
+                )
+        );
+
+        Baie pont35 = Baie.pont(
+                3500,
+                new Creneau(
+                        LocalTime.of(8, 0),
+                        LocalTime.of(12, 0)
+                ),
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(18, 0)
+                )
+        );
+
+        Planning planning = new Planning(
+                pont25,
+                pont35
+        );
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        LocalTime.of(8, 0)
+                );
+
+        assertFalse(resultat.estDisponible());
+
+        assertEquals(
+                "Aucun créneau compatible disponible aujourd'hui",
+                resultat.raison()
+        );
+    }
 }
