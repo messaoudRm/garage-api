@@ -1,15 +1,18 @@
 package garage.app.planning;
 
+import java.util.List;
+
 public class Planning {
 
-    private final Creneau occupe;
+    private final List<Creneau> occupes;
 
-    public Planning(Creneau occupe) {
-        this.occupe = occupe;
+    public Planning(Creneau... occupes) {
+        this.occupes = List.of(occupes);
     }
 
     public boolean estDisponible(Creneau demande) {
         return demande.estDansLesHorairesDuGarage()
-                && demande.estDisponiblePendant(occupe);
+                && occupes.stream()
+                .allMatch(occupe -> demande.estDisponiblePendant(occupe));
     }
 }

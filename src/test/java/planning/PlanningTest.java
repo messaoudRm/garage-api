@@ -30,6 +30,24 @@ class PlanningTest {
     }
 
     @Test
+    void doit_refuser_un_creneau_qui_traverse_la_pause_dejeuner() {
+
+        Planning planning = new Planning(
+                new Creneau(
+                        LocalTime.of(9, 0),
+                        LocalTime.of(11, 30)
+                )
+        );
+
+        Creneau demande = new Creneau(
+                LocalTime.of(11, 30),
+                LocalTime.of(13, 0)
+        );
+
+        assertFalse(planning.estDisponible(demande));
+    }
+
+    @Test
     void doit_refuser_un_creneau_qui_chevauche_un_creneau_occupe() {
 
         Planning planning = new Planning(
@@ -48,18 +66,22 @@ class PlanningTest {
     }
 
     @Test
-    void doit_refuser_un_creneau_qui_traverse_la_pause_dejeuner() {
+    void doit_refuser_un_creneau_qui_chevauche_un_des_creneaux_occupes() {
 
         Planning planning = new Planning(
                 new Creneau(
                         LocalTime.of(9, 0),
-                        LocalTime.of(11, 30)
+                        LocalTime.of(10, 0)
+                ),
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(15, 0)
                 )
         );
 
         Creneau demande = new Creneau(
-                LocalTime.of(11, 30),
-                LocalTime.of(13, 0)
+                LocalTime.of(14, 30),
+                LocalTime.of(15, 30)
         );
 
         assertFalse(planning.estDisponible(demande));
