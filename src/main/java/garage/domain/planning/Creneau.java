@@ -8,6 +8,12 @@ public class Creneau {
     private final LocalTime fin;
 
     public Creneau(LocalTime debut, LocalTime fin) {
+        if (fin.isBefore(debut)) {
+            throw new IllegalArgumentException(
+                    "La fin du créneau ne peut pas être avant le début"
+            );
+        }
+
         this.debut = debut;
         this.fin = fin;
     }
