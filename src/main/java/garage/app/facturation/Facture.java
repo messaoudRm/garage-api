@@ -4,7 +4,11 @@ import garage.domain.Montant;
 
 public class Facture {
 
-    private Montant montant;
+    private static final long POURCENTAGE_ACOMPTE = 30;
+    private static final long POURCENTAGE_TVA = 20;
+    private static final long CENT = 100;
+
+    private final Montant montant;
     private boolean soldeEncaisse;
 
     public Facture(Montant montant) {
@@ -12,28 +16,28 @@ public class Facture {
     }
 
     public Montant montantAcompte() {
-        long acompte = montant.getCentimes() * 30 / 100;
-        return Montant.centimes(acompte);
+        return calculerPourcentage(montant, POURCENTAGE_ACOMPTE);
     }
 
     public Montant montantSolde() {
-        long acompte = montant.getCentimes() * 30 / 100;
-        long solde = montant.getCentimes() - acompte;
-        return Montant.centimes(solde);
+        Montant acompte = montantAcompte();
+        return Montant.centimes(montant.getCentimes() - acompte.getCentimes());
     }
 
     public Montant montantTTC() {
-        long tva = montant.getCentimes() * 20 / 100;
-        long total = montant.getCentimes() + tva;
-        return Montant.centimes(total);
+        Montant tva = calculerPourcentage(montant, POURCENTAGE_TVA);
+        return Montant.centimes(montant.getCentimes() + tva.getCentimes());
     }
 
     public void encaisserSolde() {
-        if (soldeEncaisse == true) {
+        if (soldeEncaisse) {
             throw new IllegalStateException("déjà soldée");
         }
 
         soldeEncaisse = true;
     }
 
+    private Montant calculerPourcentage(Montant montant, long pourcentage) {
+        return Montant.centimes(montant.getCentimes() * pourcentage / CENT);
+    }
 }
