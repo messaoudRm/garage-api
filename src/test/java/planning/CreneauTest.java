@@ -85,4 +85,15 @@ class CreneauTest {
 
         assertTrue(demande.estDansLesHorairesDuGarage());
     }
+
+    @Test
+    void doit_refuser_un_creneau_qui_commence_avant_l_ouverture() {
+
+        Creneau demande = new Creneau(
+                LocalTime.of(7, 0),
+                LocalTime.of(9, 0)
+        );
+
+        assertFalse(demande.estDansLesHorairesDuGarage());
+    }
 }
