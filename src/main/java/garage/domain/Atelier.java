@@ -1,6 +1,6 @@
 package garage.domain;
 
-enum Atelier {
+public enum Atelier {
     MECANIQUE,
     CARROSSERIE,
     DIAGNOSTIC_ELECTRONIQUE
