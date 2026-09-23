@@ -1,3 +1,5 @@
 package garage.domain;
 
-public record Operation(int id) {}
+import java.time.Duration;
+
+public record Operation(Atelier atelier, Duration temps) {}

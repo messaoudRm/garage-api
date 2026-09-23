@@ -1,4 +1,4 @@
 package garage.domain;
 
-public record Client(int id) {}
+public record Client(String nom) {}
 

@@ -1,5 +1,6 @@
 package garage.domain;
 
-public record Dossier(Vehicule vehicule, Client client, Operation operation) {
+import java.util.List;
 
+public record Dossier(Client client, Vehicule vehicule, List<Operation> operations) {
 }
