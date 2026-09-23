@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Planning {
 
+    private static final LocalTime FERMETURE = LocalTime.of(18, 0);
+    private static final int PAS_RECHERCHE_MINUTES = 30;
+
     private final List<Creneau> occupes;
 
     public Planning(Creneau... occupes) {
@@ -23,8 +26,7 @@ public class Planning {
     ) {
         LocalTime heure = heureDebut;
 
-        while (!heure.isAfter(LocalTime.of(18, 0))) {
-
+        while (!heure.isAfter(FERMETURE)) {
             LocalTime fin = heure.plusMinutes(dureeMinutes);
 
             Creneau demande = new Creneau(heure, fin);
@@ -33,7 +35,7 @@ public class Planning {
                 return demande;
             }
 
-            heure = heure.plusMinutes(30);
+            heure = heure.plusMinutes(PAS_RECHERCHE_MINUTES);
         }
 
         return null;

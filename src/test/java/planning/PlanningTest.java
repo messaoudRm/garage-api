@@ -134,31 +134,4 @@ class PlanningTest {
                 resultat
         );
     }
-
-//    @Test
-//    void doit_indiquer_qu_aucun_creneau_n_est_disponible() {
-//
-//        Planning planning = new Planning(
-//                new Creneau(
-//                        LocalTime.of(8, 0),
-//                        LocalTime.of(12, 0)
-//                ),
-//                new Creneau(
-//                        LocalTime.of(14, 0),
-//                        LocalTime.of(18, 0)
-//                )
-//        );
-//
-//        Planning.Resultat resultat =
-//                planning.chercherCreneau(
-//                        LocalTime.of(8, 0),
-//                        180
-//                );
-//
-//        assertFalse(resultat.estDisponible());
-//        assertEquals(
-//                "Aucun créneau disponible aujourd'hui",
-//                resultat.raison()
-//        );
-//    }
 }
