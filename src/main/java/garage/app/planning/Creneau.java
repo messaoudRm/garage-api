@@ -37,4 +37,19 @@ public class Creneau {
 
         return matin || apresMidi;
     }
+
+    //pour le test "garage.planning.PlanningTest#doit_trouver_le_premier_creneau_disponible"
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Creneau autre)) {
+            return false;
+        }
+
+        return debut.equals(autre.debut)
+                && fin.equals(autre.fin);
+    }
 }

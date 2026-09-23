@@ -8,7 +8,7 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 class PlanningTest {
 
     @Test
@@ -86,4 +86,79 @@ class PlanningTest {
 
         assertFalse(planning.estDisponible(demande));
     }
+
+    @Test
+    void doit_trouver_le_premier_creneau_disponible() {
+
+        Planning planning = new Planning(
+                new Creneau(
+                        LocalTime.of(9, 0),
+                        LocalTime.of(11, 30)
+                )
+        );
+
+        Creneau resultat = planning.trouverPremierCreneauDisponible(
+                LocalTime.of(9, 0),
+                30
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(11, 30),
+                        LocalTime.of(12, 0)
+                ),
+                resultat
+        );
+    }
+
+    @Test
+    void doit_rechercher_apres_la_pause_dejeuner() {
+
+        Planning planning = new Planning(
+                new Creneau(
+                        LocalTime.of(9, 0),
+                        LocalTime.of(11, 30)
+                )
+        );
+
+        Creneau resultat = planning.trouverPremierCreneauDisponible(
+                LocalTime.of(11, 30),
+                90
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(15, 30)
+                ),
+                resultat
+        );
+    }
+
+//    @Test
+//    void doit_indiquer_qu_aucun_creneau_n_est_disponible() {
+//
+//        Planning planning = new Planning(
+//                new Creneau(
+//                        LocalTime.of(8, 0),
+//                        LocalTime.of(12, 0)
+//                ),
+//                new Creneau(
+//                        LocalTime.of(14, 0),
+//                        LocalTime.of(18, 0)
+//                )
+//        );
+//
+//        Planning.Resultat resultat =
+//                planning.chercherCreneau(
+//                        LocalTime.of(8, 0),
+//                        180
+//                );
+//
+//        assertFalse(resultat.estDisponible());
+//        assertEquals(
+//                "Aucun créneau disponible aujourd'hui",
+//                resultat.raison()
+//        );
+//    }
 }
