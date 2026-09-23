@@ -78,6 +78,9 @@ public class Planning {
 
         int dureeMinutes = (int) operation.temps().toMinutes();
 
+        Baie meilleureBaie = null;
+        Creneau meilleurCreneau = null;
+
         for (Baie baie : baies) {
 
             if (!baie.estCompatibleAvec(operation.atelier())) {
@@ -94,9 +97,23 @@ public class Planning {
                     dureeMinutes
             );
 
-            if (creneau != null) {
-                return Resultat.disponible(baie, creneau);
+            if (creneau == null) {
+                continue;
             }
+
+            if (meilleurCreneau == null
+                    || creneau.getDebut().isBefore(meilleurCreneau.getDebut())) {
+
+                meilleureBaie = baie;
+                meilleurCreneau = creneau;
+            }
+        }
+
+        if (meilleurCreneau != null) {
+            return Resultat.disponible(
+                    meilleureBaie,
+                    meilleurCreneau
+            );
         }
 
         return Resultat.indisponible(

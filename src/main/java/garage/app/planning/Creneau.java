@@ -23,6 +23,10 @@ public class Creneau {
         this.fin = fin;
     }
 
+    public LocalTime getDebut() {
+        return debut;
+    }
+
     public boolean estDisponiblePendant(Creneau occupe) {
         return this.fin.compareTo(occupe.debut) <= 0
                 || this.debut.compareTo(occupe.fin) >= 0;
