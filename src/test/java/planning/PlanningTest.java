@@ -1,10 +1,12 @@
 package planning;
 
-import garage.app.planning.Creneau;
-import garage.app.planning.Planning;
+import garage.app.planning.*;
+import garage.domain.*;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -130,6 +132,42 @@ class PlanningTest {
                 new Creneau(
                         LocalTime.of(14, 0),
                         LocalTime.of(15, 30)
+                ),
+                resultat
+        );
+    }
+
+    @Test
+    void doit_trouver_le_premier_creneau_pour_une_operation_du_dossier() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.MECANIQUE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine"),
+                vehicule,
+                List.of(operation)
+        );
+
+        Planning planning = new Planning();
+
+        Creneau resultat = planning.trouverPremierCreneauPour(
+                dossier,
+                LocalTime.of(8, 0)
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(8, 0),
+                        LocalTime.of(10, 0)
                 ),
                 resultat
         );
