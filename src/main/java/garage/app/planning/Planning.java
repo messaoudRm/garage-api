@@ -5,6 +5,7 @@ import garage.domain.Operation;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Planning {
 
@@ -39,21 +40,11 @@ public class Planning {
             LocalTime heureDebut,
             int dureeMinutes
     ) {
-        LocalTime heure = heureDebut;
-
-        while (!heure.isAfter(FERMETURE)) {
-            LocalTime fin = heure.plusMinutes(dureeMinutes);
-
-            Creneau demande = new Creneau(heure, fin);
-
-            if (estDisponible(demande)) {
-                return demande;
-            }
-
-            heure = heure.plusMinutes(PAS_RECHERCHE_MINUTES);
-        }
-
-        return null;
+        return trouverPremierCreneau(
+                heureDebut,
+                dureeMinutes,
+                this::estDisponible
+        );
     }
 
     public Creneau trouverPremierCreneauPour(
@@ -126,6 +117,18 @@ public class Planning {
             LocalTime heureDebut,
             int dureeMinutes
     ) {
+        return trouverPremierCreneau(
+                heureDebut,
+                dureeMinutes,
+                baie::estDisponible
+        );
+    }
+
+    private Creneau trouverPremierCreneau(
+            LocalTime heureDebut,
+            int dureeMinutes,
+            Predicate<Creneau> conditionDisponible
+    ) {
         LocalTime heure = heureDebut;
 
         while (!heure.isAfter(FERMETURE)) {
@@ -135,7 +138,7 @@ public class Planning {
                     heure.plusMinutes(dureeMinutes)
             );
 
-            if (baie.estDisponible(demande)) {
+            if (conditionDisponible.test(demande)) {
                 return demande;
             }
 
