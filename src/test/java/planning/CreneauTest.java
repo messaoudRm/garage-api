@@ -41,4 +41,15 @@ class CreneauTest {
 
         assertTrue(demande.estDisponiblePendant(occupe));
     }
+
+    @Test
+    void doit_refuser_un_creneau_qui_traverse_la_pause_dejeuner() {
+
+        Creneau demande = new Creneau(
+                LocalTime.of(11, 30),
+                LocalTime.of(13, 0)
+        );
+
+        assertFalse(demande.estDansLesHorairesDuGarage());
+    }
 }
