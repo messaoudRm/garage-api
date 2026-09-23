@@ -1,0 +1,28 @@
+package devis;
+
+import garage.domain.Montant;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+public class TarificationCarrosserieTest {
+
+
+    @Test
+    @DisplayName("US-2 · 2 h de carrosserie coûtent 156,00 €")
+    void deux_heures_de_carrosserie_coutent_156_euros() {
+
+        TarificationCarrosserie tarification =
+                new TarificationCarrosserie();
+
+        Montant montant =
+                tarification.calculer(Duration.ofHours(2));
+
+        assertThat(montant.getCentimes())
+                .isEqualTo(15600);
+    }
+
+}
