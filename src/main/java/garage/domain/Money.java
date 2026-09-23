@@ -1,4 +1,4 @@
-package garage;
+package garage.domain;
 
 public class Money {
   private long cents;

@@ -1,3 +1,3 @@
-package garage; 
+package garage.domain;
 
 public record Operation(int id) {}
