@@ -11,6 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PlanningTest {
 
     @Test
@@ -170,6 +171,48 @@ class PlanningTest {
                         LocalTime.of(10, 0)
                 ),
                 resultat
+        );
+    }
+
+    @Test
+    void doit_trouver_une_baie_compatible_avec_le_vehicule_et_l_operation() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                3200
+        );
+
+        Operation operation = new Operation(
+                Atelier.MECANIQUE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine"),
+                vehicule,
+                List.of(operation)
+        );
+
+        Planning planning = new Planning(
+                Baie.pont(2500),
+                Baie.pont(3500)
+        );
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(dossier, LocalTime.of(8, 0));
+
+        assertTrue(resultat.estDisponible());
+        assertEquals(
+                Baie.pont(3500),
+                resultat.baie()
+        );
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(8, 0),
+                        LocalTime.of(10, 0)
+                ),
+                resultat.creneau()
         );
     }
 }
