@@ -1,4 +1,4 @@
-package garage.planning;
+package planning;
 
 import garage.app.planning.Creneau;
 import garage.app.planning.Planning;

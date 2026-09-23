@@ -1,3 +1,6 @@
+package planning;
+
+
 import garage.app.planning.Creneau;
 import org.junit.jupiter.api.Test;
 
