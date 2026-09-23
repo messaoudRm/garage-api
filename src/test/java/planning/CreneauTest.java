@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CreneauTest {
 
@@ -51,5 +50,17 @@ class CreneauTest {
         );
 
         assertFalse(demande.estDansLesHorairesDuGarage());
+    }
+
+    @Test
+    void doit_refuser_un_creneau_dont_la_fin_est_avant_le_debut() {
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Creneau(
+                        LocalTime.of(11, 0),
+                        LocalTime.of(10, 0)
+                )
+        );
     }
 }
