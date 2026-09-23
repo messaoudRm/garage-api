@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CreneauTest {
 
@@ -23,5 +24,21 @@ class CreneauTest {
         );
 
         assertFalse(demande.estDisponiblePendant(occupe));
+    }
+
+    @Test
+    void doit_accepter_un_creneau_qui_commence_a_la_fin_du_creneau_occupe() {
+
+        Creneau occupe = new Creneau(
+                LocalTime.of(9, 0),
+                LocalTime.of(11, 30)
+        );
+
+        Creneau demande = new Creneau(
+                LocalTime.of(11, 30),
+                LocalTime.of(12, 0)
+        );
+
+        assertTrue(demande.estDisponiblePendant(occupe));
     }
 }
