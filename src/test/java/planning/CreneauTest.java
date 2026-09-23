@@ -1,6 +1,4 @@
-package garage.planning;
-
-import garage.domain.planning.Creneau;
+import garage.app.planning.Creneau;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;

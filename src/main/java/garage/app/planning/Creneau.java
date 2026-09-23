@@ -1,4 +1,4 @@
-package garage.domain.planning;
+package garage.app.planning;
 
 import java.time.LocalTime;
 
