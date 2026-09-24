@@ -94,14 +94,14 @@ run_program() {
   compile_all || return 1
   local class
   class=$(main_class) || return 1
-  java -cp "$OUT/classes" "$class"
+  java -cp "$OUT/classes:$LIBS/*" "$class"
 }
 
 start_app() {
   local class
   class=$(main_class quiet) || return 0
   echo "── programme $class ──"
-  java -cp "$OUT/classes" "$class" < /dev/null &
+  java -cp "$OUT/classes:$LIBS/*" "$class" < /dev/null &
   APP_PID=$!
   # Un serveur : on attend qu'il écoute. Un programme simple : on attend qu'il finisse.
   for _ in $(seq 50); do
