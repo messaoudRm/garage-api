@@ -1,6 +1,7 @@
 package devis;
 
 import garage.app.devis.Devis;
+import garage.app.devis.LigneDevis;
 import garage.app.devis.LignePiece;
 import garage.app.devis.MainOeuvreMecanique;
 import garage.domain.Montant;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

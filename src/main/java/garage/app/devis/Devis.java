@@ -2,12 +2,31 @@ package garage.app.devis;
 
 import garage.domain.Montant;
 
-public record Devis(Montant mainOeuvre , Montant pieces) {
+import java.util.List;
 
 
 
-    public Montant total(){
+public record Devis(List<LigneDevis> lignes) {
 
-        return Montant.ajouter(mainOeuvre ,pieces ) ;
+    public Devis {
+        lignes = List.copyOf(lignes);
+    }
+
+    public Devis(Montant mainOeuvre, Montant pieces) {
+        this(List.of(
+                new LigneDevis("Main-d'œuvre", mainOeuvre),
+                new LigneDevis("Pièces", pieces)
+        ));
+    }
+
+    public Montant total() {
+
+        Montant total = Montant.centimes(0);
+
+        for (LigneDevis ligne : lignes) {
+            total = Montant.ajouter(total, ligne.montant());
+        }
+
+        return total;
     }
 }
