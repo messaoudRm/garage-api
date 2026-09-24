@@ -11,7 +11,7 @@ class StockTest {
   @Test
   void doit_renvoyer_zero_si_pas_de_piece_dispo() {
     Stock stock = new Stock(new HashMap<Piece, Integer>());
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
 
     assertEquals(stock.nombrePieceDisponnible(piece), 0);
   }
@@ -19,7 +19,7 @@ class StockTest {
   @Test
   void doit_renvoyer_nombre_piece_dispo() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
     
     stockInit.put(piece, 3);
 
@@ -31,7 +31,7 @@ class StockTest {
   @Test
   void doit_reserver_piece() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
     
     stockInit.put(piece, 3);
 
@@ -45,7 +45,7 @@ class StockTest {
   @Test
   void doit_throw_error_reserver_piece() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
     
     stockInit.put(piece, 3);
 
@@ -58,8 +58,8 @@ class StockTest {
   @Test
   void doit_reserver_list_piece() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
-    Piece piece2 = new Piece("démarreur", Montant.euros(200));
+    Piece piece = new Piece("joint de culasse");
+    Piece piece2 = new Piece("démarreur");
 
     stockInit.put(piece, 3);
     
@@ -76,21 +76,23 @@ class StockTest {
   @Test
   void doit_consommer_piece() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
     
     stockInit.put(piece, 3);
 
     Stock stock = new Stock(stockInit);
 
+    stock.reserverPiece(piece, 1);
+
     stock.consommerPiece(piece, 1);
 
-    assertEquals(stock.nombrePieceDisponnible(piece), 2); 
+    assertEquals(stock.nombrePieceRayon(piece), 2); 
   }
 
   @Test
   void doit_throw_error_consommer_piece() {
     HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
-    Piece piece = new Piece("joint de culasse", Montant.euros(30));
+    Piece piece = new Piece("joint de culasse");
     
     stockInit.put(piece, 3);
 
