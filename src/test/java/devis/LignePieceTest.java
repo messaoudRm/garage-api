@@ -4,11 +4,11 @@ import garage.app.devis.LignePiece;
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class LignePieceTest {
-
 
 
     @Test
@@ -25,16 +25,15 @@ public class LignePieceTest {
     }
 
 
-
     @Test
     @DisplayName("US-1 Une ligne de pièce avec une quantité zéro est refusée")
     void une_ligne_piece_avec_zero_exemplaire_est_refusee() {
 
-        assertThatThrownBy(()-> new LignePiece(
-                "plaquette" ,
-                Montant.centimes(2345) ,
-                0 )
-        ).isInstanceOf(IllegalArgumentException.class) ;
+        assertThatThrownBy(() -> new LignePiece(
+                "plaquette",
+                Montant.centimes(2345),
+                0)
+        ).isInstanceOf(IllegalArgumentException.class);
 
     }
 
