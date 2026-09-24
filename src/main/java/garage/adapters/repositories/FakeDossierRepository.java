@@ -1,5 +1,6 @@
 package garage.adapters.repositories;
 
+import garage.domain.repositories.DossierRepository;
 import garage.domain.Dossier;
 import garage.domain.Atelier;
 import garage.domain.Operation;
@@ -11,7 +12,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 
-public class DossierRepository {
+public class FakeDossierRepository implements DossierRepository {
   
   public Dossier get(Integer id) {
     HashMap<Piece, Integer> pieces = new HashMap<>();
