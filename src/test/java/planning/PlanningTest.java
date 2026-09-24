@@ -151,7 +151,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false , false ),
                 vehicule,
                 List.of(operation)
         );
@@ -187,7 +187,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine" ,false , false),
                 vehicule,
                 List.of(operation)
         );
@@ -237,7 +237,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false , false ),
                 vehicule,
                 List.of(operation)
         );
@@ -289,7 +289,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false , false ),
                 vehicule,
                 List.of(operation)
         );
@@ -339,7 +339,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false, false ),
                 vehicule,
                 List.of(operation)
         );
@@ -387,7 +387,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false, false ),
                 vehicule,
                 List.of(operation)
         );
@@ -444,7 +444,7 @@ class PlanningTest {
         );
 
         Dossier dossier = new Dossier(
-                new Client("Yassine"),
+                new Client("Yassine", false , false ),
                 vehicule,
                 List.of(operation)
         );
