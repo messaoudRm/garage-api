@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS client (
+nom VARCHAR(255) NOT NULL,
+professionnel BOOLEAN NOT NULL,
+habitue BOOLEAN NOT NULL
+);

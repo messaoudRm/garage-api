@@ -24,3 +24,18 @@ services:
       PORT_WEB: ${PORT_WEB:-2044}
     ports:
       - "127.0.0.1:${PORT_WEB:-2044}:8000"
+
+  postgres:
+    image: postgres:17
+    container_name: garage-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-garage}
+      POSTGRES_USER: ${POSTGRES_USER:-garage}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-garage}
+    ports:
+      - "5432:5432"
+    volumes:
+      - garage_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  garage_postgres_data:
