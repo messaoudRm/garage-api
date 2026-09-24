@@ -1,12 +1,12 @@
 package devis;
 
-import garage.app.devis.Forfait;
-import garage.app.devis.Tarification;
+import garage.app.devis.*;
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -57,5 +57,21 @@ public class ForfaitTest {
     }
 
 
+    @Test
+    void devis_forfait_vidange_et_carrosserie_coutent_147_50_euros(){
+        Tarification vidange =  new Forfait("Vidange", Montant.euros(89));
+        Tarification carrosserie = new TarificationCarrosserie() ;
+
+        Montant prixVidange = vidange.calculer(Duration.ofMinutes(25)) ;
+        Montant prixCarrosserie  = carrosserie.calculer(Duration.ofMinutes(45)) ;
+
+Devis devis = new Devis(List.of(
+
+        new LigneDevis("vidange" ,  prixVidange) ,
+        new LigneDevis("carrouerie", prixCarrosserie)
+)) ;
+
+assertThat(devis.total().getCentimes()).isEqualTo(14750) ;
+    }
 
 }
