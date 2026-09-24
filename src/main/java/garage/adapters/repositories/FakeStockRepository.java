@@ -2,10 +2,12 @@ package garage.adapters.repositories;
 
 import garage.domain.Stock;
 import garage.domain.Piece;
+import garage.domain.repositories.StockRepository;
+
 
 import java.util.HashMap;
 
-public class StockRepository {
+public class FakeStockRepository implements StockRepository {
   
   public Stock get() {
     HashMap<Piece, Integer> init = new HashMap<>();

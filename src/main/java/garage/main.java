@@ -4,8 +4,10 @@ import garage.app.stock.ReserverPieceService;
 import garage.adapters.http.ReserverPieceHandler;
 import garage.app.stock.ConsommerPieceService;
 import garage.adapters.http.ConsommerPieceHandler;
-import garage.adapters.repositories.StockRepository;
-import garage.adapters.repositories.DossierRepository;
+import garage.adapters.repositories.FakeStockRepository;
+import garage.domain.repositories.StockRepository;
+import garage.adapters.repositories.FakeDossierRepository;
+import garage.domain.repositories.DossierRepository;
 
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
@@ -14,8 +16,8 @@ public class main {
   
   public static void main(String[] args) {
     // Bootstrap de l'application 
-    DossierRepository dr = new DossierRepository();
-    StockRepository sr = new StockRepository();
+    DossierRepository dr = new FakeDossierRepository();
+    StockRepository sr = new FakeStockRepository();
 
     ReserverPieceService rps = new ReserverPieceService(dr, sr);
     ConsommerPieceService cps = new ConsommerPieceService(dr, sr);

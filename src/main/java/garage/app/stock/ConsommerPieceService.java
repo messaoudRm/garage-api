@@ -2,8 +2,8 @@ package garage.app.stock;
 
 import garage.domain.Dossier;
 import garage.domain.Stock;
-import garage.adapters.repositories.DossierRepository;
-import garage.adapters.repositories.StockRepository;
+import garage.domain.repositories.DossierRepository;
+import garage.domain.repositories.StockRepository;
 
 import java.util.Map;
 import java.util.HashMap;
