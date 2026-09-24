@@ -1,5 +1,6 @@
 package facturation;
 
+import garage.app.facturation.Garantie;
 import garage.domain.Montant;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GarantieTest {
 
-    rivate static final Montant MONTANT_TOTAL = Montant.centimes(30000);
+    private static final Montant MONTANT_TOTAL = Montant.centimes(30000);
     private static final Montant MONTANT_PIECES = Montant.centimes(10000);
 
     // Intervention reprise 8 mois après pour pièce défectueuse : tout est offert
