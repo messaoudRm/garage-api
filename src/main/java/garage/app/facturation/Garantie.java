@@ -4,36 +4,22 @@ import garage.domain.Montant;
 
 public class Garantie {
 
-    private static final int DUREE_STANDARD_MOIS = 12;
-    private static final int DUREE_EMBRAYAGE_MOIS = 24;
-
-    private String motif;
-
-    public Montant calculerMontantFacture(
+    public ResultatGarantie calculer(
             Montant montantTotal,
             Montant montantPieces,
             int moisEcoules,
-            String cause,
-            boolean estEmbrayage
+            CauseRetour cause,
+            TypePiece typePiece
     ) {
-        int dureeGarantie = estEmbrayage ? DUREE_EMBRAYAGE_MOIS : DUREE_STANDARD_MOIS;
-
-        if (moisEcoules > dureeGarantie) {
-            motif = "hors garantie";
-            return montantTotal;
+        if (moisEcoules > typePiece.dureeGarantieMois()) {
+            return new ResultatGarantie(montantTotal, "hors garantie");
         }
 
-        if (cause.equals("piece")) {
-            motif = "garantie pièce";
-            return Montant.centimes(0);
+        if (cause == CauseRetour.PIECE_DEFECTUEUSE) {
+            return new ResultatGarantie(Montant.centimes(0), "garantie pièce");
         }
 
-        motif = "garantie pose";
-        return montantPieces;
-    }
-
-    public String motif() {
-        return motif;
+        return new ResultatGarantie(montantPieces, "garantie pose");
     }
 
 }
