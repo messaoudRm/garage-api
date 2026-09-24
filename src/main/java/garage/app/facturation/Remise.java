@@ -5,20 +5,11 @@ import garage.domain.Montant;
 
 public class Remise {
 
+    // Ordre fixé une seule fois, ici : professionnel avant habitué (cf. critère 256,50€)
     public Montant calculer(Montant mainOeuvre, Montant pieces, Client client) {
-        long mo = mainOeuvre.getCentimes();
-
-        if (client.professionnel()) {
-            mo = mo * 85 / 100;
-        }
-
-        long total = mo + pieces.getCentimes();
-
-        if (client.habitue()) {
-            total = total * 95 / 100;
-        }
-
-        return Montant.centimes(total);
+        Montant moApresPro = new RemiseProfessionnelle().appliquer(mainOeuvre, client);
+        Montant total = Montant.centimes(moApresPro.getCentimes() + pieces.getCentimes());
+        return new RemiseHabitue().appliquer(total, client);
     }
 
     public Montant appliquerGesteCommercial(Montant montant, Montant geste) {
