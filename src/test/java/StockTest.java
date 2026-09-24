@@ -100,6 +100,20 @@ class StockTest {
 
     assertThrows(IllegalStateException.class, () -> stock.consommerPiece(piece, 4));
   }
+  
+  @Test
+  void doit_ajouter_piece() {
+    HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
+    Piece piece = new Piece("joint de culasse");
+    
+    stockInit.put(piece, 3);
 
+    Stock stock = new Stock(stockInit);
+
+    stock.ajouterPiece(piece, 1);
+
+    assertEquals(stock.nombrePieceRayon(piece), 4); 
+    assertEquals(stock.nombrePieceDisponnible(piece), 4); 
+  }
 
 } 
