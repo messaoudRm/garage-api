@@ -2,6 +2,8 @@ package garage;
 
 import garage.app.stock.ReserverPieceService;
 import garage.adapters.http.ReserverPieceHandler;
+import garage.app.stock.ConsommerPieceService;
+import garage.adapters.http.ConsommerPieceHandler;
 import garage.adapters.repositories.StockRepository;
 import garage.adapters.repositories.DossierRepository;
 
@@ -16,12 +18,16 @@ public class main {
     StockRepository sr = new StockRepository();
 
     ReserverPieceService rps = new ReserverPieceService(dr, sr);
+    ConsommerPieceService cps = new ConsommerPieceService(dr, sr);
+    
     ReserverPieceHandler rph = new ReserverPieceHandler(rps);
+    ConsommerPieceHandler cph = new ConsommerPieceHandler(cps);
 
     try {
       HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-      // Ajout des handler via la methode server.route
+      // Ajout des handler via la methode server.createContext
       server.createContext("/reserver", rph);
+      server.createContext("/consommer", cph);
 
       server.start();
       Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop(5)));
