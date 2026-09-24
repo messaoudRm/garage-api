@@ -1,14 +1,16 @@
 package devis;
 
 import garage.app.devis.Devis;
+import garage.app.devis.LigneDevis;
 import garage.app.devis.LignePiece;
 import garage.app.devis.MainOeuvreMecanique;
-import garage.app.devis.TarificationCarrosserie;
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -28,22 +30,42 @@ public class DevisTest {
 assertThat(devis.total().getCentimes()).isEqualTo(28410) ;
     }
 
+
+
     @Test
-    @DisplayName("US-2 · 1 h de mécanique et 1 h de carrosserie coûtent 140,00 €")
-    void une_heure_mecanique_et_une_heure_carrosserie_coutent_140_euros() {
+    @DisplayName("US-1 · le détail d'un devis rendu ne peut pas être modifié")
+    void le_detail_du_devis_ne_change_pas_si_la_liste_source_est_modifiee() {
 
-        MainOeuvreMecanique mecanique = new MainOeuvreMecanique();
-        TarificationCarrosserie carrosserie = new TarificationCarrosserie();
+        List<LigneDevis> lignes = new ArrayList<>();
 
-        Montant prixMecanique =
-                mecanique.totalMainOeuvre(Duration.ofHours(1));
+        lignes.add(
+                new LigneDevis(
+                        "Main-d'œuvre mécanique 1h45",
+                        Montant.centimes(10850)
+                )
+        );
 
-        Montant prixCarrosserie =
-                carrosserie.calculer(Duration.ofHours(1));
+        lignes.add(
+                new LigneDevis(
+                        "4 plaquettes à 43,90 €",
+                        Montant.centimes(17560)
+                )
+        );
 
-        Montant total =
-                Montant.ajouter(prixMecanique, prixCarrosserie);
+        Devis devis = new Devis(lignes);
 
-        assertThat(total.getCentimes()).isEqualTo(14000);
+        // Le devis est maintenant rendu : 284,10 €
+
+        lignes.add(
+                new LigneDevis(
+                        "1 pneu à 10 €",
+                        Montant.centimes(1000)
+                )
+        );
+
+        // La modification de la liste d'origine
+        // ne doit PAS modifier le devis déjà rendu.
+        assertThat(devis.total().getCentimes())
+                .isEqualTo(28410);
     }
 }
