@@ -1,12 +1,16 @@
 package devis;
 
 
+
 import garage.app.devis.*;
 
 import garage.app.devis.Devis;
 import garage.app.devis.LigneDevis;
 import garage.app.devis.LignePiece;
 import garage.app.devis.MainOeuvreMecanique;
+
+
+
 
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
@@ -73,6 +77,9 @@ public class DevisTest {
     }
 
 
+
+
+
     @Test
     @DisplayName("US-2 · 1 h de mécanique et 1 h de carrosserie coûtent 140,00 €")
     void une_heure_mecanique_et_une_heure_carrosserie_coutent_140_euros() {
@@ -92,4 +99,5 @@ public class DevisTest {
         assertThat(total.getCentimes())
                 .isEqualTo(14000);
     }
+
 }
