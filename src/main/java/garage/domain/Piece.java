@@ -1,4 +1,4 @@
 package garage.domain;
 
-public record Piece(String nom, Montant prix) {
+public record Piece(String nom) {
 }

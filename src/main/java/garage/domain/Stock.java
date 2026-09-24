@@ -9,8 +9,8 @@ public final class Stock {
   private final HashMap<Piece, Integer> disponnible;
 
   public Stock(HashMap<Piece, Integer> init) {
-    rayon = init;
-    disponnible = init;
+    rayon = new HashMap<Piece, Integer>(init);
+    disponnible = new HashMap<Piece, Integer>(init);
   }
   
   public Integer nombrePieceDisponnible(Piece p) {
@@ -21,30 +21,43 @@ public final class Stock {
     return rayon.getOrDefault(p, 0);
   }
 
+  public Integer nombrePieceReserve(Piece p) {
+    return rayon.getOrDefault(p, 0) - disponnible.getOrDefault(p, 0);
+  }
+
   public void reserverPiece(Piece p, Integer quantite) {
-    Integer piecesDisponnibles = disponnible.getOrDefault(p, 0);
-    
-    if (quantite > piecesDisponnibles) {
+    if (quantite > nombrePieceDisponnible(p)) {
       throw new IllegalStateException("stock insuffisant");
     }
 
-    disponnible.put(p, piecesDisponnibles - quantite);
+    disponnible.put(p, nombrePieceDisponnible(p) - quantite);
   }
 
-  public void reserverListPiece(Map<Piece, Integer> list) {
-    list.forEach((k, v) -> this.reserverPiece(k, v));
+  public void reserverListPiece(Map<Piece, Integer> demande) {
+    demande.forEach((p, q) -> {
+      if (q > nombrePieceDisponnible(p)) {
+            throw new IllegalStateException("stock insuffisant : " + p);
+        }
+    });
+
+    demande.forEach(this::reserverPiece);
   }
   
   public void consommerPiece(Piece p, Integer quantite) {
-    Integer piecesEnRayon = rayon.getOrDefault(p, 0);
-    Integer piecesDisponnibles = disponnible.getOrDefault(p, 0);
-
-    if (quantite > piecesEnRayon || quantite > piecesDisponnibles) {
-      throw new IllegalStateException("desynchronisation du stock");
+    if (quantite > nombrePieceReserve(p)) {
+      throw new IllegalStateException("pas assez de piece reservé");
     }
 
-    rayon.put(p, piecesEnRayon - quantite);
-    disponnible.put(p, piecesDisponnibles - quantite);
+    rayon.put(p, nombrePieceRayon(p) - quantite);
   }
   
+  public void consommerListPiece(Map<Piece, Integer> demande) {
+    demande.forEach((p, q) -> {
+      if (q > nombrePieceReserve(p)) {
+            throw new IllegalStateException("pas assez de piece reservé : " + p);
+        }
+    });
+
+    demande.forEach(this::consommerPiece);
+  }
 }
