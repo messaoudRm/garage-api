@@ -31,11 +31,11 @@ public class MainOeuvreMecaniqueTest {
     @DisplayName("US-1 · 1h35 de main-d'œuvre coûte 108,50 € facturée comme 1h45,")
     void une_heure_trente_cinq_108_50_euros() {
 
-        MainOeuvreMecanique mainOeuvre = new MainOeuvreMecanique() ;
+        MainOeuvreMecanique mainOeuvre = new MainOeuvreMecanique();
 
- Montant montant = mainOeuvre.totalMainOeuvre(Duration.ofMinutes(95));
+        Montant montant = mainOeuvre.totalMainOeuvre(Duration.ofMinutes(95));
 
-assertThat(montant.getCentimes()).isEqualTo(10850) ;
+        assertThat(montant.getCentimes()).isEqualTo(10850);
 
     }
 
