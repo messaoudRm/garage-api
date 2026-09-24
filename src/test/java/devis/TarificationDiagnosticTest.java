@@ -1,5 +1,6 @@
 package devis;
 
+import garage.app.devis.TarificationDiagnostic;
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
