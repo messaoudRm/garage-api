@@ -1,5 +1,6 @@
 package devis;
 
+import garage.app.devis.Forfait;
 import garage.app.devis.Tarification;
 import garage.domain.Montant;
 import org.junit.jupiter.api.DisplayName;
@@ -34,6 +35,26 @@ public class ForfaitTest {
 
 
 
+
+    @Test
+    @DisplayName("US-3 · forfait plaquettes avant coûte 149 €")
+    void forfait_plaquettes_coute_149_euros_quelle_que_soit_la_duree() {
+
+        Tarification plaquettes =
+                new Forfait("Vidange", Montant.euros(149));
+
+        Montant prix25Minutes =
+                plaquettes.calculer(Duration.ofMinutes(25));
+
+        Montant prix2Heures10 =
+                plaquettes.calculer(Duration.ofMinutes(130));
+
+        assertThat(prix25Minutes.getCentimes())
+                .isEqualTo(14900);
+
+        assertThat(prix2Heures10.getCentimes())
+                .isEqualTo(14900);
+    }
 
 
 
