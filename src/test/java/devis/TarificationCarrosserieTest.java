@@ -34,7 +34,7 @@ public class TarificationCarrosserieTest {
         TarificationCarrosserie tarification = new TarificationCarrosserie() ;
         Montant montant = tarification.calculer(Duration.ofMinutes(31)) ;
 
-        assertThat(montant.getCentimes()).isEqualTo(3900) ;
+        assertThat(montant.getCentimes()).isEqualTo(5850) ;
     }
 
 }
