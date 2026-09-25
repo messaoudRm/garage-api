@@ -74,5 +74,17 @@ public final class Stock {
   public void ajouterListPiece(Map<Piece, Integer> demande) {
     demande.forEach(this::ajouterPiece);
   }
+  
+  public Map<Piece, Integer> piecesManquantes() {
+    Map<Piece, Integer> pieces = new HashMap<>();
+
+    rayon.forEach((p, q) -> {
+      if (q < p.seuil()) {
+        pieces.put(p, p.cible() - q);
+      }
+    });
+
+    return pieces;
+  }
 
 }

@@ -116,4 +116,33 @@ class StockTest {
     assertEquals(stock.nombrePieceDisponnible(piece), 4); 
   }
 
+  @Test
+  void doit_retourner_pieces_manquantes() {
+    HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
+    Piece piece = new Piece("joint de culasse");
+    
+    stockInit.put(piece, 3);
+
+    Stock stock = new Stock(stockInit);
+    
+    Map<Piece, Integer> manquant = stock.piecesManquantes();
+
+    assertEquals(manquant.getOrDefault(piece, 0), 9); 
+  }
+
+  @Test
+  void doit_retourner_zero_pieces_manquantes() {
+    HashMap<Piece, Integer> stockInit = new HashMap<Piece, Integer>();
+    Piece piece = new Piece("joint de culasse");
+    
+    stockInit.put(piece, 4);
+
+    Stock stock = new Stock(stockInit);
+    
+    Map<Piece, Integer> manquant = stock.piecesManquantes();
+
+    assertEquals(manquant.getOrDefault(piece, 0), 0); 
+  }
+
+
 } 
