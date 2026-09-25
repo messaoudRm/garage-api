@@ -4,6 +4,7 @@ import garage.app.planning.*;
 import garage.domain.*;
 import org.junit.jupiter.api.Test;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
@@ -491,4 +492,182 @@ class PlanningTest {
                 resultat.raison()
         );
     }
+
+    @Test
+    void doit_proposer_une_peinture_mercredi_matin_car_la_cabine_est_indisponible_l_apres_midi() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Baie cabine = Baie.cabinePeinture();
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.WEDNESDAY,
+                        LocalTime.of(10, 0)
+                );
+
+        assertTrue(resultat.estDisponible());
+
+        assertSame(
+                cabine,
+                resultat.baie()
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(10, 0),
+                        LocalTime.of(12, 0)
+                ),
+                resultat.creneau()
+        );
+    }
+
+
+    @Test
+    void doit_refuser_une_peinture_le_mercredi_apres_midi() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Baie cabine = Baie.cabinePeinture();
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.WEDNESDAY,
+                        LocalTime.of(14, 0)
+                );
+
+        assertFalse(resultat.estDisponible());
+    }
+
+
+    @Test
+    void doit_accepter_une_peinture_le_mardi_apres_midi() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Baie cabine = Baie.cabinePeinture();
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.TUESDAY,
+                        LocalTime.of(14, 0)
+                );
+
+        assertTrue(resultat.estDisponible());
+
+        assertSame(
+                cabine,
+                resultat.baie()
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(16, 0)
+                ),
+                resultat.creneau()
+        );
+    }
+
+
+    @Test
+    void doit_ne_proposer_aucun_creneau_le_mercredi_si_la_cabine_est_occupee_le_matin() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Creneau occupationMatin = new Creneau(
+                LocalTime.of(8, 0),
+                LocalTime.of(12, 0)
+        );
+
+        Baie cabine = Baie.cabinePeinture(
+                occupationMatin
+        );
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.WEDNESDAY,
+                        LocalTime.of(8, 0)
+                );
+
+        assertFalse(resultat.estDisponible());
+
+        assertEquals(
+                "Aucun créneau compatible disponible aujourd'hui",
+                resultat.raison()
+        );
+    }
+
 }

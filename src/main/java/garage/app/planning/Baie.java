@@ -64,6 +64,10 @@ public class Baie {
                 .allMatch(occupe -> demande.estDisponiblePendant(occupe));
     }
 
+    public boolean estCabinePeinture() {
+        return type == TypeBaie.CABINE_PEINTURE;
+    }
+
     private enum TypeBaie {
         PONT,
         FOSSE,
