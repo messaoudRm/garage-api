@@ -16,14 +16,24 @@ public class TarificationRemorquageTest {
 
 
         TarificationRemorquage tarificationRemorquage = new TarificationRemorquage() ;
-        Montant prixRemoquage =  tarificationRemorquage.calculer(20) ;
+        Montant prixRemoquage =  tarificationRemorquage.calculer(30) ;
 
-assertThat(prixRemoquage.getCentimes()).isEqualTo(4500) ;
+assertThat(prixRemoquage.getCentimes()).isEqualTo(6300) ;
 
     }
 
 
+    @Test
+    @DisplayName("20 km de remorquage coûtent 45,00 €")
+    void vingt_km_de_remorquage_coutent_45_euros() {
 
+
+        TarificationRemorquage tarificationRemorquage = new TarificationRemorquage() ;
+        Montant prixRemoquage =  tarificationRemorquage.calculer(20) ;
+
+        assertThat(prixRemoquage.getCentimes()).isEqualTo(4500) ;
+
+    }
 
 
 }
