@@ -576,4 +576,51 @@ class PlanningTest {
     }
 
 
+    @Test
+    void doit_accepter_une_peinture_le_mardi_apres_midi() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Baie cabine = Baie.cabinePeinture();
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.TUESDAY,
+                        LocalTime.of(14, 0)
+                );
+
+        assertTrue(resultat.estDisponible());
+
+        assertSame(
+                cabine,
+                resultat.baie()
+        );
+
+        assertEquals(
+                new Creneau(
+                        LocalTime.of(14, 0),
+                        LocalTime.of(16, 0)
+                ),
+                resultat.creneau()
+        );
+    }
+
 }

@@ -1,5 +1,6 @@
 package garage.app.planning;
 
+import garage.domain.Atelier;
 import garage.domain.Dossier;
 import garage.domain.Operation;
 
@@ -203,6 +204,7 @@ public class Planning {
 
             Creneau creneau = trouverPremierCreneauPourBaie(
                     baie,
+                    jour,
                     heureDebut,
                     dureeMinutes
             );
@@ -229,5 +231,36 @@ public class Planning {
         return Resultat.indisponible(
                 "Aucun créneau compatible disponible aujourd'hui"
         );
+    }
+
+    private Creneau trouverPremierCreneauPourBaie(
+            Baie baie,
+            DayOfWeek jour,
+            LocalTime heureDebut,
+            int dureeMinutes
+    ) {
+        return trouverPremierCreneau(
+                heureDebut,
+                dureeMinutes,
+                creneau -> estDisponiblePourJour(
+                        baie,
+                        jour,
+                        creneau
+                )
+        );
+    }
+
+    private boolean estDisponiblePourJour(
+            Baie baie,
+            DayOfWeek jour,
+            Creneau creneau
+    ) {
+        if (jour == DayOfWeek.WEDNESDAY
+                && baie.estCompatibleAvec(Atelier.CARROSSERIE)
+                && !creneau.getDebut().isBefore(LocalTime.of(14, 0))) {
+            return false;
+        }
+
+        return baie.estDisponible(creneau);
     }
 }
