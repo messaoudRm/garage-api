@@ -256,7 +256,7 @@ public class Planning {
             Creneau creneau
     ) {
         if (jour == DayOfWeek.WEDNESDAY
-                && baie.estCompatibleAvec(Atelier.CARROSSERIE)
+                && baie.estCabinePeinture()
                 && !creneau.getDebut().isBefore(LocalTime.of(14, 0))) {
             return false;
         }
