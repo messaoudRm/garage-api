@@ -10,6 +10,11 @@ import garage.adapters.repositories.FakeStockRepository;
 import garage.domain.repositories.StockRepository;
 import garage.adapters.repositories.FakeDossierRepository;
 import garage.domain.repositories.DossierRepository;
+import garage.adapters.repositories.FakeFournisseurRepository;
+import garage.domain.repositories.FournisseurRepository;
+import garage.adapters.repositories.FakeCommandeRepository;
+import garage.domain.repositories.CommandeRepository;
+import garage.app.stock.CommanderPieceService;
 
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
@@ -22,8 +27,11 @@ public class main {
     DatabaseInitializer.initialize();
     DossierRepository dr = new FakeDossierRepository();
     StockRepository sr = new FakeStockRepository();
+    CommandeRepository cr = new FakeCommandeRepository();
+    FournisseurRepository fr = new FakeFournisseurRepository();
 
-    ReserverPieceService rps = new ReserverPieceService(dr, sr);
+    CommanderPieceService cmdps = new CommanderPieceService(cr, fr);
+    ReserverPieceService rps = new ReserverPieceService(dr, sr, cr, cmdps);
     ConsommerPieceService cps = new ConsommerPieceService(dr, sr);
     
     ReserverPieceHandler rph = new ReserverPieceHandler(rps);

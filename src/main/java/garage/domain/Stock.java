@@ -12,6 +12,11 @@ public final class Stock {
     rayon = new HashMap<Piece, Integer>(init);
     disponnible = new HashMap<Piece, Integer>(init);
   }
+
+  public Stock(HashMap<Piece, Integer> initRayon, HashMap<Piece, Integer> initDispo) {
+    rayon = new HashMap<Piece, Integer>(initRayon);
+    disponnible = new HashMap<Piece, Integer>(initDispo);
+  }
   
   public Integer nombrePieceDisponnible(Piece p) {
     return disponnible.getOrDefault(p, 0);
@@ -60,4 +65,26 @@ public final class Stock {
 
     demande.forEach(this::consommerPiece);
   }
+
+  public void ajouterPiece(Piece p, Integer q) {
+    rayon.put(p, nombrePieceRayon(p) + q);
+    disponnible.put(p, nombrePieceDisponnible(p) + q);
+  }
+
+  public void ajouterListPiece(Map<Piece, Integer> demande) {
+    demande.forEach(this::ajouterPiece);
+  }
+  
+  public Map<Piece, Integer> piecesManquantes() {
+    Map<Piece, Integer> pieces = new HashMap<>();
+
+    rayon.forEach((p, q) -> {
+      if (q < p.seuil()) {
+        pieces.put(p, p.cible() - q);
+      }
+    });
+
+    return pieces;
+  }
+
 }
