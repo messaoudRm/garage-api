@@ -3,6 +3,7 @@ package facturation;
 import garage.app.facturation.DemandeRecapitulatifConstructeur;
 import garage.app.facturation.LigneRecapitulatifConstructeur;
 import garage.app.facturation.PieceGarantie;
+import garage.app.facturation.RecapitulatifConstructeurAdapter;
 import org.junit.jupiter.api.Test;
 import garage.domain.Montant;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,8 +15,8 @@ public class RecapitulatifConstructeurAdapterTest {
     // 3 pièces reprises : 3 lignes + 1 ligne mo
     @Test
     void doit_produire_une_ligne_par_piece_reprise_plus_une_ligne_main_oeuvre() {
-
         RecapitulatifConstructeurAdapter adapter = new RecapitulatifConstructeurAdapter();
+
         DemandeRecapitulatifConstructeur demande = new DemandeRecapitulatifConstructeur(
                 "AB-123-CD",
                 List.of(
@@ -29,22 +30,16 @@ public class RecapitulatifConstructeurAdapterTest {
         List<LigneRecapitulatifConstructeur> lignes = adapter.adapter(demande);
 
         assertEquals(4, lignes.size());
+        assertLigne(lignes.get(0), "AB-123-CD", "REF-001", 5000);
+        assertLigne(lignes.get(1), "AB-123-CD", "REF-002", 3000);
+        assertLigne(lignes.get(2), "AB-123-CD", "REF-003", 2000);
+        assertLigne(lignes.get(3), "AB-123-CD", "MAIN_OEUVRE", 15000);
+    }
 
-        assertEquals("AB-123-CD", lignes.get(0).immatriculation());
-        assertEquals("REF-001", lignes.get(0).reference());
-        assertEquals(5000, lignes.get(0).montant().getCentimes());
-
-        assertEquals("AB-123-CD", lignes.get(1).immatriculation());
-        assertEquals("REF-002", lignes.get(1).reference());
-        assertEquals(3000, lignes.get(1).montant().getCentimes());
-
-        assertEquals("AB-123-CD", lignes.get(2).immatriculation());
-        assertEquals("REF-003", lignes.get(2).reference());
-        assertEquals(2000, lignes.get(2).montant().getCentimes());
-
-        assertEquals("AB-123-CD", lignes.get(3).immatriculation());
-        assertEquals("MAIN_OEUVRE", lignes.get(3).reference());
-        assertEquals(15000, lignes.get(3).montant().getCentimes());
+    private void assertLigne(LigneRecapitulatifConstructeur ligne, String immatriculation, String reference, long montant) {
+        assertEquals(immatriculation, ligne.immatriculation());
+        assertEquals(reference, ligne.reference());
+        assertEquals(montant, ligne.montant().getCentimes());
     }
 
 }
