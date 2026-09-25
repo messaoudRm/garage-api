@@ -623,4 +623,51 @@ class PlanningTest {
         );
     }
 
+
+    @Test
+    void doit_ne_proposer_aucun_creneau_le_mercredi_si_la_cabine_est_occupee_le_matin() {
+
+        Vehicule vehicule = new Vehicule(
+                "AA-123-AA",
+                "Peugeot 308",
+                1400
+        );
+
+        Operation operation = new Operation(
+                Atelier.CARROSSERIE,
+                Duration.ofHours(2)
+        );
+
+        Dossier dossier = new Dossier(
+                new Client("Yassine", false, false),
+                vehicule,
+                List.of(operation)
+        );
+
+        Creneau occupationMatin = new Creneau(
+                LocalTime.of(8, 0),
+                LocalTime.of(12, 0)
+        );
+
+        Baie cabine = Baie.cabinePeinture(
+                occupationMatin
+        );
+
+        Planning planning = new Planning(cabine);
+
+        Planning.Resultat resultat =
+                planning.chercherCreneau(
+                        dossier,
+                        DayOfWeek.WEDNESDAY,
+                        LocalTime.of(8, 0)
+                );
+
+        assertFalse(resultat.estDisponible());
+
+        assertEquals(
+                "Aucun créneau compatible disponible aujourd'hui",
+                resultat.raison()
+        );
+    }
+
 }
