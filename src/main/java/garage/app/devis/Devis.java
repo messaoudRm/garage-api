@@ -29,4 +29,8 @@ public record Devis(List<LigneDevis> lignes) {
 
         return total;
     }
+
+
+
+
 }
