@@ -11,7 +11,7 @@ public class TarificationRemorquageTest {
 
 
     @Test
-    @DisplayName("30 km de remorquage coûtent 63,00 €")
+    @DisplayName("US-R . 30 km de remorquage coûtent 63,00 €")
     void trente_km_de_remorquage_coutent_63_euros() {
 
 
@@ -24,7 +24,7 @@ assertThat(prixRemoquage.getCentimes()).isEqualTo(6300) ;
 
 
     @Test
-    @DisplayName("20 km de remorquage coûtent 45,00 €")
+    @DisplayName("US-R . 20 km de remorquage coûtent 45,00 €")
     void vingt_km_de_remorquage_coutent_45_euros() {
 
 

@@ -98,4 +98,31 @@ public class DevisTest {
                 .isEqualTo(14000);
     }
 
+
+    @Test
+    @DisplayName("US-R .Le devis affiche les kilomètres sur la ligne de remorquage")
+    void devis_affiche_les_kilometres_du_remorquage() {
+        TarificationRemorquage remorquage =
+                new TarificationRemorquage();
+
+        Montant montant = remorquage.calculer(30);
+
+        LigneDevis ligneRemorquage =
+                new LigneDevis(
+                        "Remorquage - 30 km",
+                        montant
+                );
+
+        Devis devis = new Devis(
+                List.of(ligneRemorquage)
+        );
+
+        assertThat(devis.lignes().get(0).libelle())
+                .contains("30 km");
+
+        assertThat(devis.lignes().get(0).montant().getCentimes())
+                .isEqualTo(6300);
+
+    }
+
 }
